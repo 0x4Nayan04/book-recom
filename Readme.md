@@ -26,7 +26,7 @@ RecomBooks is an intelligent book recommendation platform that leverages the pow
 1. **Clone the repository:**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/0x4Nayan04/book-recom
    ```
 
 2. **Install dependencies:**
@@ -53,23 +53,15 @@ RecomBooks is an intelligent book recommendation platform that leverages the pow
 
 ## Project Structure
 
+```
 src/
-├── app/ # Next.js app directory
-│ ├── api/ # API routes
-│ ├── components/ # React components
-│ └── lib/ # Utility functions
-├── types/ # TypeScript type definitions
-└── styles/ # Global styles
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+├── app/           # Next.js app directory
+│   ├── api/      # API routes
+│   ├── components/ # React components
+│   └── lib/      # Utility functions
+├── types/         # TypeScript type definitions
+└── styles/        # Global styles
+```
 
 ## License
 
