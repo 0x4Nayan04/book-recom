@@ -359,6 +359,47 @@ export default function Page() {
             </div>
           </motion.div>
         )}
+
+        {/* Add error handling UI */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-8 p-4 bg-destructive/10 text-destructive rounded-lg max-w-2xl mx-auto text-center"
+          >
+            <p>{error}</p>
+            <MovingButton
+              onClick={resetSearch}
+              className="mt-4 bg-background text-foreground hover:bg-background/90"
+              containerClassName="w-auto mx-auto"
+            >
+              Try Again
+            </MovingButton>
+          </motion.div>
+        )}
+
+        {/* Add loading skeleton for book grid */}
+        {loading && (
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="animate-pulse bg-white/60 dark:bg-black/60 rounded-3xl overflow-hidden"
+              >
+                <div className="aspect-[3/4] bg-primary/10" />
+                <div className="p-8 space-y-4">
+                  <div className="h-8 bg-primary/10 rounded-lg w-3/4" />
+                  <div className="h-4 bg-primary/10 rounded-lg w-1/2" />
+                  <div className="space-y-2">
+                    <div className="h-4 bg-primary/10 rounded-lg" />
+                    <div className="h-4 bg-primary/10 rounded-lg w-5/6" />
+                    <div className="h-4 bg-primary/10 rounded-lg w-4/6" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
       <Footer />
     </AuroraBackground>

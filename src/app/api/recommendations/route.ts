@@ -128,13 +128,13 @@ async function getBookDetails(title: string) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(req: Request) {
   try {
-    const { prompt } = await request.json();
+    const { prompt } = await req.json();
 
-    if (!prompt || typeof prompt !== 'string') {
+    if (!prompt?.trim()) {
       return NextResponse.json(
-        { error: 'Please provide a valid search prompt' },
+        { error: 'Please provide a search query' },
         { status: 400 }
       );
     }
@@ -164,8 +164,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ books: validBooks });
   } catch (error) {
     console.error('API Error:', error);
-    const errorMessage =
-      error instanceof Error ? error.message : 'An unexpected error occurred';
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to get recommendations. Please try again.' },
+      { status: 500 }
+    );
   }
 }

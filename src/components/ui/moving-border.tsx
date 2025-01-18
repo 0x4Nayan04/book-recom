@@ -19,6 +19,7 @@ export function Button({
   borderClassName,
   duration,
   className,
+  loading,
   ...otherProps
 }: {
   borderRadius?: string;
@@ -28,14 +29,17 @@ export function Button({
   borderClassName?: string;
   duration?: number;
   className?: string;
+  loading?: boolean;
   [key: string]: any;
 }) {
   return (
     <Component
       className={cn(
         'bg-transparent relative p-[1px] overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]',
-        containerClassName
+        containerClassName,
+        loading && 'opacity-75 cursor-not-allowed'
       )}
+      disabled={loading}
       style={{
         borderRadius: borderRadius,
       }}

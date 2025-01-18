@@ -10,25 +10,13 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'RecomBooks - Smart Book Discovery Platform',
-  description:
-    'Smart Book Recommendations for Every Reader. Discover your next favorite book with AI-powered personalized recommendations.',
-  keywords: [
-    'book recommendations',
-    'AI book finder',
-    'personalized reading',
-    'book discovery',
-    'reading suggestions',
-    'smart book search',
-    'RecomBooks',
-  ],
-  authors: [{ name: 'Nayan Swarnkar' }],
-  creator: 'Nayan Swarnkar',
-  publisher: 'RecomBooks',
   metadataBase: new URL('https://book-recom-nayansoni.vercel.app'),
+  title: 'RecomBooks - Smart Book Discovery Platform',
+  description: 'Smart Book Recommendations for Every Reader',
+
+  // OpenGraph Meta Tags
   openGraph: {
     type: 'website',
-    locale: 'en_US',
     url: 'https://book-recom-nayansoni.vercel.app',
     title: 'RecomBooks - Smart Book Discovery Platform',
     description: 'Smart Book Recommendations for Every Reader',
@@ -38,36 +26,64 @@ export const metadata: Metadata = {
         url: '/meta-image.png',
         width: 1200,
         height: 630,
-        alt: 'RecomBooks - Smart Book Recommendations for Every Reader',
+        alt: 'RecomBooks Preview',
       },
     ],
   },
+
+  // Twitter Meta Tags
   twitter: {
     card: 'summary_large_image',
+    site: '@NayanSwarnkar04',
+    creator: '@NayanSwarnkar04',
     title: 'RecomBooks - Smart Book Discovery',
     description: 'Smart Book Recommendations for Every Reader',
-    creator: '@NayanSwarnkar04',
     images: ['/meta-image.png'],
   },
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
+
+  // Additional Meta Tags
+  alternates: {
+    canonical: 'https://book-recom-nayansoni.vercel.app',
   },
-  manifest: '/site.webmanifest',
+
+  // Basic Meta Tags
+  authors: [
+    { name: 'Nayan Swarnkar', url: 'https://twitter.com/NayanSwarnkar04' },
+  ],
+  creator: 'Nayan Swarnkar',
+  publisher: 'RecomBooks',
+  formatDetection: {
+    telephone: false,
+  },
+
+  // Icons
+  icons: {
+    icon: [{ url: '/favicon.ico' }, { url: '/icon.png', type: 'image/png' }],
+    apple: [{ url: '/apple-icon.png' }],
+    other: [
+      {
+        rel: 'apple-touch-icon',
+        url: '/apple-touch-icon.png',
+      },
+    ],
+  },
+
+  keywords: [
+    'book recommendations',
+    'AI book finder',
+    'personalized reading',
+    'book discovery',
+    'reading suggestions',
+  ],
   robots: {
     index: true,
     follow: true,
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  verification: {
-    google: 'your-google-verification-code',
   },
 };
 
@@ -77,8 +93,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
+    <html lang="en">
       <body
         className={`${inter.variable} ${playfair.variable} ${GeistSans.variable} font-sans`}
       >
