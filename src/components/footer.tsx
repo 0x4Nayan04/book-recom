@@ -12,7 +12,7 @@ export default function Footer() {
         </div>
         <div className="flex items-center justify-center space-x-4">
           <Link
-            href="https://twitter.com/recombooks"
+            href="https://x.com/NayanSwarnkar04"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full p-2 hover:bg-primary/10 transition-colors"
@@ -21,7 +21,7 @@ export default function Footer() {
             <span className="sr-only">Twitter</span>
           </Link>
           <Link
-            href="https://linkedin.com/company/recombooks"
+            href="https://www.linkedin.com/in/nayanswarnkar/"
             target="_blank"
             rel="noopener noreferrer"
             className="rounded-full p-2 hover:bg-primary/10 transition-colors"

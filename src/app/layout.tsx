@@ -9,7 +9,8 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL('https://book-recom-nayansoni.vercel.app'),
   title: "RecomBooks - Smart Book Recommendations",
   description:
     "Discover personalized book recommendations based on your interests and preferences. Find your next favorite read with RecomBooks.",
@@ -21,30 +22,24 @@ export const metadata = {
     siteName: "RecomBooks",
     images: [
       {
-        url: "/favicon.png",
-        width: 1200,
-        height: 630,
+        url: "/favicon_io/android-chrome-512x512.png",
+        width: 512,
+        height: 512,
         alt: "RecomBooks - Smart Book Recommendations",
       },
     ],
   },
-
-  // Twitter Meta Tags
   twitter: {
     card: "summary_large_image",
     site: "@NayanSwarnkar04",
     creator: "@NayanSwarnkar04",
     title: "RecomBooks - Smart Book Discovery",
     description: "Smart Book Recommendations for Every Reader",
-    images: ["/meta-image.png"],
+    images: ["/favicon_io/android-chrome-512x512.png"],
   },
-
-  // Additional Meta Tags
   alternates: {
     canonical: "https://book-recom-nayansoni.vercel.app",
   },
-
-  // Basic Meta Tags
   authors: [
     { name: "Nayan Swarnkar", url: "https://twitter.com/NayanSwarnkar04" },
   ],
@@ -53,18 +48,31 @@ export const metadata = {
   formatDetection: {
     telephone: false,
   },
-
-  // Icons
   icons: {
-    icon: [{ url: "/favicon.ico" }, { url: "/icon.png", type: "image/png" }],
+    icon: [
+      { url: "/favicon_io/favicon.ico" },
+      { url: "/favicon_io/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon_io/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/favicon_io/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
     other: [
       {
-        rel: "apple-touch-icon",
-        url: "/apple-touch-icon.png",
+        rel: "android-chrome-192x192",
+        url: "/favicon_io/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        rel: "android-chrome-512x512",
+        url: "/favicon_io/android-chrome-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
       },
     ],
   },
-
+  manifest: "/favicon_io/site.webmanifest",
   keywords: [
     "book recommendations",
     "AI book finder",
@@ -91,9 +99,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.png" />
-      </head>
       <body
         className={`${inter.variable} ${playfair.variable} ${GeistSans.variable} font-sans`}>
         {children}
