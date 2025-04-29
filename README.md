@@ -4,7 +4,7 @@
 
 RecomBooks is an elegant book discovery platform that uses AI to provide personalized book recommendations. Built with modern web technologies and a focus on user experience, it helps readers find their next favorite book through natural language queries.
 
-![RecomBooks Demo](public/demo.png)
+![RecomBooks Demo](public/meta-image.jpg)
 
 ## Features
 

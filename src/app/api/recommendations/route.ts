@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
-const GEMINI_API_URL =
-  'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 async function getBookRecommendations(prompt: string): Promise<string[]> {
   try {
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error('GEMINI_API_KEY is not defined in environment variables');
+    }
+
     const response = await axios.post(
       `${GEMINI_API_URL}?key=${process.env.GEMINI_API_KEY}`,
       {
@@ -18,6 +21,35 @@ async function getBookRecommendations(prompt: string): Promise<string[]> {
             ],
           },
         ],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 1024,
+        },
+        safetySettings: [
+          {
+            category: "HARM_CATEGORY_HARASSMENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_HATE_SPEECH",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          },
+          {
+            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+          }
+        ]
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
       }
     );
 
@@ -62,19 +94,33 @@ async function getBookRecommendations(prompt: string): Promise<string[]> {
     throw new Error('Could not parse book recommendations');
   } catch (error) {
     console.error('Error getting recommendations:', error);
+    if (axios.isAxiosError(error)) {
+      const errorMessage = error.response?.data?.error?.message || error.message;
+      throw new Error(`Gemini API error: ${error.response?.status} ${errorMessage}`);
+    }
     throw error;
   }
 }
 
 async function getBookDetails(title: string) {
   try {
+    if (!process.env.GOOGLE_BOOKS_API_KEY) {
+      throw new Error('GOOGLE_BOOKS_API_KEY is not defined in environment variables');
+    }
+
     const response = await axios.get(
       `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
         title
-      )}&orderBy=relevance&maxResults=1&key=${process.env.GOOGLE_BOOKS_API_KEY}`
+      )}&orderBy=relevance&maxResults=1&key=${process.env.GOOGLE_BOOKS_API_KEY}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
     );
 
     if (!response.data?.items?.[0]) {
+      console.warn(`No results found for book: ${title}`);
       return null;
     }
 
@@ -123,7 +169,11 @@ async function getBookDetails(title: string) {
       },
     };
   } catch (error) {
-    console.error(`Error fetching details for book: ${title}`, error);
+    if (axios.isAxiosError(error)) {
+      console.error(`Error fetching details for book ${title}: ${error.response?.status} ${error.response?.statusText || error.message}`);
+    } else {
+      console.error(`Error fetching details for book: ${title}`, error);
+    }
     return null;
   }
 }
@@ -136,6 +186,14 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { error: 'Please provide a search query' },
         { status: 400 }
+      );
+    }
+
+    // Validate environment variables
+    if (!process.env.GEMINI_API_KEY || !process.env.GOOGLE_BOOKS_API_KEY) {
+      return NextResponse.json(
+        { error: 'API configuration missing. Check environment variables.' },
+        { status: 500 }
       );
     }
 
@@ -165,7 +223,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error('API Error:', error);
     return NextResponse.json(
-      { error: 'Failed to get recommendations. Please try again.' },
+      { error: `Failed to get recommendations: ${error instanceof Error ? error.message : 'Unknown error'}` },
       { status: 500 }
     );
   }
