@@ -11,14 +11,10 @@ export interface Book {
     barnesNoble: string;
     bookshop: string;
   };
-  price: {
-    amount: number;
-    currency: string;
-  };
-  bestPrice: {
-    amount: number;
-    currency: string;
+  bestPrice?: {
     store: string;
+    amount: number;
+    currency: string;
     link: string;
   };
 } 
